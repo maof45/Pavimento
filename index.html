@@ -12,6 +12,56 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
         }
+        /* --- ESTILOS DE LA NUEVA PORTADA --- */
+        #portada {
+            position: relative;
+            height: 100vh; /* Ocupa toda la altura de la pantalla */
+            width: 100%;
+            background-color: #0A2463; /* Fondo Azul Oscuro Principal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Esconde las partes de las curvas que se salen */
+        }
+        /* Curva superior (Celeste) */
+        #portada::before {
+            content: '';
+            position: absolute;
+            top: -40vh; /* Posicionamiento de la curva */
+            left: -25vw;
+            width: 150vw; /* Ancho extendido para rotación */
+            height: 120vh; /* Altura extendida */
+            background-color: #3E92CC; /* Color Celeste */
+            border-bottom-right-radius: 60% 40%; /* Curvatura */
+            border-bottom-left-radius: 40% 60%;
+            transform: rotate(-10deg); /* Rotación para efecto diagonal */
+            z-index: 1;
+        }
+        /* Curva inferior (Oscura, para crear contraste) */
+        #portada::after {
+            content: '';
+            position: absolute;
+            bottom: -50vh; /* Posicionamiento */
+            right: -30vw;
+            width: 160vw;
+            height: 110vh;
+            background-color: #0c2c7a; /* Un azul ligeramente más claro que el fondo */
+            border-top-left-radius: 50% 60%; /* Curvatura opuesta */
+            border-top-right-radius: 60% 40%;
+            transform: rotate(-12deg);
+            z-index: 2;
+        }
+        .portada-content {
+            position: relative;
+            z-index: 3; /* El contenido debe estar sobre todas las curvas */
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            /* Efecto de sombra para legibilidad */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+        }
+        /* --- FIN ESTILOS PORTADA --- */
+
         .chart-container {
             position: relative;
             width: 100%;
@@ -93,7 +143,7 @@
             position: -webkit-sticky;
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 50; /* Z-index alto para estar sobre el contenido */
             background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -119,23 +169,46 @@
 </head>
 <body class="bg-gray-100">
 
-    <!-- PLAN COMMENTS
-    Color Palette: Brilliant Blues (#0A2463, #3E92CC, #70B7FA, #FFFFFF, #B2D0F4)
-    Narrative Structure:
-    1. Hero: Title and Introduction.
-    2. Section 1: Asphalt Binders (Conventional, Modified-PG, Emulsions).
-    3. Section 2: Asphalt Mixtures (HMA, WMA, Cold, Special).
-    4. Section 3: Application Matrix (Summary Table).
-    5. Section 4: References (APA 7).
-    Visualization Choices:
-    1. PG Grade (Inform): Chart.js Bar Chart. Shows high/low temp for PG 64-22. (NO SVG)
-    2. Emulsion Classification (Organize): HTML/Tailwind diagram. Shows Cationic/Anionic split and curing types. (NO SVG, NO MERMAID)
-    3. HMA vs. WMA (Compare): Chart.js Grouped Bar Chart. Compares temp and energy. (NO SVG)
-    4. RAP Content (Inform): Chart.js Donut Chart. Shows % of RAP in recycled mixes. (NO SVG)
-    5. Application Matrix (Organize): HTML/Tailwind Table. Links mixture types to road applications. (NO SVG)
-    Constraint Check: NO SVG and NO MERMAID JS were used. All visuals are Chart.js (Canvas) or pure HTML/Tailwind.
-    -->
+    <section id="portada">
+        <div class="portada-content max-w-5xl mx-auto">
+            
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-3">
+                UNIVERSIDAD TÉCNICA DE ORURO
+            </h1>
+            
+            <h2 class="text-xl md:text-2xl font-light text-blue-200 tracking-wider mb-10">
+                DIRECCION DE POSTGRADO
+            </h2>
+            
+            <h3 class="text-2xl md:text-3xl font-semibold text-white mb-4 leading-snug">
+                MAESTRÍA EN INGENIERÍA VIAL CON MENCIÓN EN CARRETERAS, PUENTES Y TÚNELES
+            </h3>
+            
+            <p class="text-lg md:text-xl font-normal text-blue-100 mb-10">
+                M-14 TECNOLOGIA DE MEZCLAS ASFALTICAS
+            </p>
+            
+            <h4 class="text-3xl md:text-4xl font-bold text-white mb-12 uppercase tracking-wide">
+                ACTIVIDAD 1: TIPOS DE MEZCLAS ASFÁLTICAS
+            </h4>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left text-lg">
+                <div class="bg-black bg-opacity-25 p-6 rounded-lg backdrop-blur-sm border border-white/20">
+                    <p class="font-semibold text-blue-200 mb-2 uppercase text-sm tracking-wider">Docente:</p>
+                    <p class="text-xl text-white">MSc. Ing. Andrés Felipe Bernal</p>
+                </div>
+                
+                <div class="bg-black bg-opacity-25 p-6 rounded-lg backdrop-blur-sm border border-white/20">
+                    <p class="font-semibold text-blue-200 mb-3 uppercase text-sm tracking-wider">Estudiantes:</p>
+                    <ul class="space-y-2 text-xl text-white">
+                        <li>• Willian Edson Palomino Arango</li>
+                        <li>• Marco Antonio Oré Flores</li>
+                    </ul>
+                </div>
+            </div>
 
+        </div>
+    </section>
     <header class="hero text-center py-16 px-6">
         <h1 class="hero-title mb-4">Clasificación de Ligantes y Mezclas Asfálticas</h1>
         <p class="text-xl max-w-3xl mx-auto text-B2D0F4">
@@ -520,9 +593,13 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                // Desplazamiento suave
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if(targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
